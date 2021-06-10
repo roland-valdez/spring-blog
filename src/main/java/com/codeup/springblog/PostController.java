@@ -40,7 +40,7 @@ public class PostController {
     }
     @GetMapping("/show")
     public String individualPost(Model model) {
-        Post post = new Post("title", "description");
+        Post post = new Post("this is the title", "you need to work better at creating this stuff");
         model.addAttribute("post", post);
         return "posts/show";
     }

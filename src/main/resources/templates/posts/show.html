@@ -5,7 +5,11 @@
     <title>Title</title>
 </head>
 <body>
-<h3>Title: <span th:text="${post.getTitle()}">title</span></h3>
-<h5>Body: <span th:text="${post.getBody()}">post</span></h5>
+<h2>A single Post:</h2>
+<div>
+    <h3>Check out this post:</h3>
+    <h3 th:text="${blog.title}"></h3>
+    <p th:text="${blog.body}"></p>
+</div>
 </body>
 </html>

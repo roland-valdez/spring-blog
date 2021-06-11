@@ -1,23 +1,21 @@
 package com.codeup.springblog;
 
-
 import javax.persistence.*;
 
-
 @Entity
-@Table(name = "posts")
-public class Post {
-    public Post(){};
+@Table(name="ads")
+public class Ad {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(nullable = false, length = 250)
+    @Column(nullable = false, length = 100)
     private String title;
 
     @Column(nullable = false)
-    private String body;
+    private String description;
 
+    public Ad(){};
     public long getId() {
         return id;
     }
@@ -34,12 +32,11 @@ public class Post {
         this.title = title;
     }
 
-
-    public String getBody() {
-        return body;
+    public String getDescription() {
+        return description;
     }
 
-    public void setBody(String body) {
-        this.body = body;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

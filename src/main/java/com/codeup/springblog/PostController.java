@@ -2,46 +2,26 @@ package com.codeup.springblog;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class PostController {
-//    @RequestMapping(path = "/posts", method = RequestMethod.GET)
-//    @ResponseBody
-//    public String postIndex() {
-//        return "This page will show all the posts";
-//    }
-//    @RequestMapping(path = "/posts/{id}", method = RequestMethod.GET)
-//    @ResponseBody
-//    public String individualPost(@PathVariable int id) {
-//        return "This page will a post that has the following " + id + " based on the url";
-//    }
-//    @RequestMapping(path = "/posts/create", method = RequestMethod.GET)
-//    @ResponseBody
-//    public String createPostsGet() {
-//        return "This page will show forms to create a post";
-//    }
-//    @PostMapping(path = "/posts/create")
-//    @ResponseBody
-//    public String createPostsPost() {
-//        return "This page will post what was submitted in the create post page";
-//    }
+ private final PostRepository postDao;
 
+    public PostController(PostRepository postDao) {
+        this.postDao = postDao;
+    }
     @GetMapping("/index")
-    public String allPosts(Model model) {
-        List<Post> list = new ArrayList<>();
-        list.add(new Post("what am i doing", "hello"));
-        list.add(new Post("hello", "goodbye"));
-        model.addAttribute("list", list);
-        return "posts/index";
+    public String postIndex(Model model){
+        model.addAttribute("list", postDao.findAll());
+        return "/posts/index";
     }
     @GetMapping("/show")
-    public String individualPost(Model model) {
-        Post post = new Post("this is the title", "you need to work better at creating this stuff");
-        model.addAttribute("post", post);
-        return "posts/show";
+    public String show(Model model){
+        model.addAttribute("blog", postDao.findByTitleLike("%good%"));
+        return "/posts/show";
     }
+
+
+
 }

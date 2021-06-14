@@ -18,6 +18,11 @@ public class Post {
     @Column(nullable = false)
     private String body;
 
+    public Post (String title, String body){
+        this.title = title;
+        this.body = body;
+    }
+
     public long getId() {
         return id;
     }

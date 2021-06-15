@@ -2,12 +2,16 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Programming Blog</title>
 </head>
 <body>
+<h1>My Programming Blog</h1>
 <div th:each="blog : ${list}">
-    <h3>Title: <span th:text="${blog.title}">title</span></h3>
-    <h5>Body: <span th:text="${blog.body}">post</span></h5>
+    <h3><span th:text="${blog.title}">title</span></h3>
+    <p><span th:text="${blog.body}">post</span></p>
+    <div th:each="image: ${blog.images}">
+        <img th:src="${image.path}" height="200" th:alt="${image.description}">
+    </div>
 </div>
 </body>
 </html>

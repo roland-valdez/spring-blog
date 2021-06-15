@@ -1,15 +1,26 @@
-package com.codeup.springblog;
+package com.codeup.springblog.controllers;
 
+import com.codeup.springblog.daos.PostRepository;
+import com.codeup.springblog.daos.UserRepository;
+import com.codeup.springblog.models.Image;
+import com.codeup.springblog.models.Post;
+import com.codeup.springblog.models.User;
+import net.bytebuddy.matcher.FilterableList;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 public class PostController {
- private final PostRepository postDao;
+    private  PostRepository postDao;
+    private UserRepository userDao;
 
-    public PostController(PostRepository postDao) {
+
+    public PostController(PostRepository postDao, UserRepository userDao) {
         this.postDao = postDao;
+        this.userDao = userDao;
     }
 
     @GetMapping("/index")
@@ -36,13 +47,22 @@ public class PostController {
 //    }
 //
     @GetMapping("posts/add")
-        public String addPost(){
+    public String addPost(){
             return "posts/add";
     }
+
     @PostMapping("posts/add")
-    public String savePost(@RequestParam(value = "title") String title, @RequestParam(value = "description") String description){
-        Post post = new Post(title, description);
+    public String savePost(
+            @RequestParam(value = "title") String title,
+            @RequestParam(value = "description") String description,
+            @RequestParam(value = "imageUrl") String imageUrl,
+            @RequestParam(value = "imageDescription") String imageDescription){
+
+        User user  = userDao.getById(1L);// just using the only saved user with id of 1. Later will be linked to session of user
+        Post post = new Post(title, description, user, null);
         Post dbPost = postDao.save(post);
+//
+
         return "redirect:/posts/" + dbPost.getId();
     }
 
@@ -54,13 +74,13 @@ public class PostController {
     }
 
     @PostMapping("posts/{id}/edit")
-    @ResponseBody
+//    @ResponseBody
     public String dbEdit(@PathVariable long id, @RequestParam(name = "title") String title, @RequestParam(name = "description") String description){
         Post post = postDao.getById(id);
         post.setTitle(title);
         post.setBody(description);
         postDao.save(post);
-        return "posts/index";
+        return "redirect:/index";
     }
 
 }

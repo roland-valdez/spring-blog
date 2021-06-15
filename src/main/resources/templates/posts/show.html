@@ -5,11 +5,14 @@
     <title>Title</title>
 </head>
 <body>
-<h2>A single Post:</h2>
+<h2>Individual Post</h2>
 <div>
-    <h3>Check out this post:</h3>
-    <h3 th:text="${blog.title}"></h3>
+   <h3 th:text="${blog.title}"></h3>
     <p th:text="${blog.body}"></p>
+    <div>Post made by: <span th:text="${blog.owner.username}"></span></div>
+</div>
+<div th:each="image: ${blog.images}">
+    <img th:src="${image.path}" height="200" th:alt="${image.description}">
 </div>
 </body>
 </html>

@@ -82,5 +82,19 @@ public class PostController {
         postDao.save(post);
         return "redirect:/index";
     }
+    @GetMapping("/posts/create")
+    public String showCreateForm(Model model) {
+        model.addAttribute("post", new Post());
+        return "posts/create";
+    }
+
+    @PostMapping("/posts/create")
+    public String create(@ModelAttribute Post post) {
+        User user = userDao.getById(1L);
+        post.setOwner(user); // need to add user to be able to save a post
+        postDao.save(post);
+        return "redirect:/posts/index";
+    }
+
 
 }

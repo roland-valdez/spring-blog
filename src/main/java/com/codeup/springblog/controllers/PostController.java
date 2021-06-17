@@ -5,23 +5,35 @@ import com.codeup.springblog.daos.UserRepository;
 import com.codeup.springblog.models.Image;
 import com.codeup.springblog.models.Post;
 import com.codeup.springblog.models.User;
-import net.bytebuddy.matcher.FilterableList;
+import com.codeup.springblog.services.EmailService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 public class PostController {
     private  PostRepository postDao;
     private UserRepository userDao;
+    private final EmailService emailService;
 
-
-    public PostController(PostRepository postDao, UserRepository userDao) {
+    public PostController(PostRepository postDao, UserRepository userDao, EmailService emailService) {
         this.postDao = postDao;
         this.userDao = userDao;
+        this.emailService = emailService;
     }
+
+
+//    public PostController(EmailService emailService){
+//        this.emailService = emailService;
+//    };
+//
+//    public PostController(PostRepository postDao, UserRepository userDao) {
+//        this.postDao = postDao;
+//        this.userDao = userDao;
+//    }
 
     @GetMapping("/index")
     public String postIndex(Model model){
@@ -59,9 +71,11 @@ public class PostController {
             @RequestParam(value = "imageDescription") String imageDescription){
 
         User user  = userDao.getById(1L);// just using the only saved user with id of 1. Later will be linked to session of user
+        List<Image> images = new ArrayList<>();
+
         Post post = new Post(title, description, user, null);
         Post dbPost = postDao.save(post);
-//
+
 
         return "redirect:/posts/" + dbPost.getId();
     }
@@ -93,6 +107,7 @@ public class PostController {
         User user = userDao.getById(1L);
         post.setOwner(user); // need to add user to be able to save a post
         postDao.save(post);
+        emailService.prepareAndSend(post, "You just created a post", post.getBody());
         return "redirect:/posts/index";
     }
 

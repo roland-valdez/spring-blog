@@ -1,7 +1,7 @@
 package com.codeup.springblog.controllers;
 
 import com.codeup.springblog.daos.PostRepository;
-import com.codeup.springblog.daos.UserRepository;
+import com.codeup.springblog.daos.UsersRepository;
 import com.codeup.springblog.models.Image;
 import com.codeup.springblog.models.Post;
 import com.codeup.springblog.models.User;
@@ -16,10 +16,10 @@ import java.util.List;
 @Controller
 public class PostController {
     private  PostRepository postDao;
-    private UserRepository userDao;
+    private UsersRepository userDao;
     private final EmailService emailService;
 
-    public PostController(PostRepository postDao, UserRepository userDao, EmailService emailService) {
+    public PostController(PostRepository postDao, UsersRepository userDao, EmailService emailService) {
         this.postDao = postDao;
         this.userDao = userDao;
         this.emailService = emailService;

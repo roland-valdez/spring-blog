@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="partials/head :: head">
+
     <meta charset="UTF-8">
     <title>Programming Blog</title>
 </head>
 <body>
+<nav th:replace="partials/navbar :: navbar"></nav>
+
 <h1>My Programming Blog</h1>
 <div th:each="blog : ${list}">
     <h3><span th:text="${blog.title}">title</span></h3>

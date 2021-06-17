@@ -1,4 +1,4 @@
-package com.codeup.springblog.controllers;
+package com.codeup.springblog.models;
 
 import com.codeup.springblog.daos.UsersRepository;
 import com.codeup.springblog.models.User;
@@ -10,7 +10,7 @@ import java.util.Collection;
 
 public class UserWithRoles extends User implements UserDetails {
 
-    public UserWithRoles(UsersRepository user) {
+    public UserWithRoles(User user) {
         super(user);  // Call the copy constructor defined in User
     }
 

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="partials/head :: head">
 
     <meta charset="UTF-8">
@@ -9,6 +10,15 @@
 <nav th:replace="partials/navbar :: navbar"></nav>
 
 <h1>My Programming Blog</h1>
+<div sec:authorize="isAuthenticated()">
+    This content is only shown to authenticated users.
+    <br>
+    User ID: <span th:text="${#authentication.principal.id}"/>
+    <br>
+    Username: <span th:text="${#authentication.principal.username}"/>
+    <br>
+    Email: <span th:text="${#authentication.principal.email}"/>
+</div>
 <div th:each="blog : ${list}">
     <h3><span th:text="${blog.title}">title</span></h3>
     <p><span th:text="${blog.body}">post</span></p>
